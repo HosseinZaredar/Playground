@@ -1,9 +1,12 @@
 package main
 
 import (
+	"Go-Playground/util"
 	"fmt"
 )
 
+/*
+// functions
 func sum(a int, b int) int {
 	return a + b
 }
@@ -11,6 +14,7 @@ func sum(a int, b int) int {
 func swap(a, b int) (int, int) {
 	return b, a
 }
+*/
 
 func main() {
 
@@ -43,11 +47,19 @@ func main() {
 		fmt.Println(c1, c2, c3)
 	*/
 
-	a := 5
-	b := 6
-	fmt.Println(sum(a, b))
+	/*
+		// functions
+		a := 5
+		b := 6
+		fmt.Println(sum(a, b))
 
-	c, d := swap(a, b)
-	fmt.Println(c, d)
+		c, d := swap(a, b)
+		fmt.Println(c, d)
+	*/
+
+	a := 1
+	b := 2
+	s := util.Sum(a, b)
+	fmt.Println(s)
 
 }
