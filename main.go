@@ -64,32 +64,52 @@ func main() {
 		fmt.Println(s)
 	*/
 
-	// if-else
-	a := 5
-	if a < 5 {
-		fmt.Println("a is less than 5")
-	} else {
-		fmt.Println("a is more than ot equal to 5")
-	}
+	/*
+		// if-else
+		a := 5
+		if a < 5 {
+			fmt.Println("a is less than 5")
+		} else {
+			fmt.Println("a is more than ot equal to 5")
+		}
 
-	if b := 2 * a; b < 7 {
-		fmt.Println("b is less than 7")
-	}
+		if b := 2 * a; b < 7 {
+			fmt.Println("b is less than 7")
+		}
 
-	// loop
-	for i := 0; i < 5; i++ {
-		fmt.Println("*")
-	}
+		// loop
+		for i := 0; i < 5; i++ {
+			fmt.Println("*")
+		}
 
-	// swtich-case
-	n := 2
-	switch n {
-	case 1:
-		fmt.Println("n = 1")
-	case 2:
-		fmt.Println("n = 2")
-	default:
-		fmt.Println("default case")
-	}
+		// swtich-case
+		n := 2
+		switch n {
+		case 1:
+			fmt.Println("n = 1")
+		case 2:
+			fmt.Println("n = 2")
+		default:
+			fmt.Println("default case")
+		}
+
+	*/
+
+	// array (fixed-size, value type)
+	var a1 [3]int
+	a1[0] = 5
+	fmt.Println(a1)
+
+	a2 := [...]int {1, 2}
+	fmt.Println(a2)
+
+	// slice (variable-size, reference tyoe)
+	var s1 []int
+	s1 = append(s1, 6)
+	fmt.Println(s1)
+
+	s2 := make([]int, 5, 10) //type, length, capacity
+    fmt.Println(s2)
+
 
 }
