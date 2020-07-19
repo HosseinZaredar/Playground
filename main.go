@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	goroutines.WP()
+	goroutines.Mutex()
 }
