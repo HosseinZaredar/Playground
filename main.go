@@ -1,9 +1,11 @@
 package main
 
 import (
-	"Go-Playground/goroutines"
+	"fmt"
+	"Go-Playground/errors"
 )
 
 func main() {
-	goroutines.Mutex()
+	errors.PanicRecover()
+	fmt.Println("contuinuing...")
 }
