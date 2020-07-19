@@ -1,11 +1,9 @@
 package main
 
 import (
-	"fmt"
-	"Go-Playground/errors"
+	"Go-Playground/goroutines"
 )
 
 func main() {
-	errors.PanicRecover()
-	fmt.Println("contuinuing...")
+	goroutines.Hist()
 }
