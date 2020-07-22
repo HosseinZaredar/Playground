@@ -1,9 +1,9 @@
 package main
 
 import (
-	tcp "Go-Playground/networking/tcp"
+	udp "Go-Playground/networking/udp"
 )
 
 func main() {
-	tcp.Server()
+	udp.Server()
 }
