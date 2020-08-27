@@ -1,4 +1,4 @@
-# Go-Playground
+# Go
 Resources:
 * [Golangbot Tutorial](https://golangbot.com/learn-golang-series/)
 * [How Goroutines Work](https://blog.nindalf.com/posts/how-goroutines-work/)
