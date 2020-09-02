@@ -6,7 +6,7 @@ function Initialize(canvas) {
   return gl;
 }
 
-function Rec(gl, {startX, startY, width, height}, {r, g, b}) {
+function Triangle(gl, {x1, y1}, {x2, y2}, {x3, y3}, {r, g, b}) {
 
     // vertex shader
     var vertexShaderSource = `#version 300 es
@@ -76,27 +76,24 @@ function Rec(gl, {startX, startY, width, height}, {r, g, b}) {
     var positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     var positions = [
-        startX, startY,
-        startX + width, startY,
-        startX, startY + height,
-        startX + width, startY,
-        startX, startY + height,
-        startX + width, startY + height
+        x1, y1,
+        x2, y2,
+        x3, y3,
     ];
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 
     // creating Vertex Array Object
-    var vao = gl.createVertexArray();
-    gl.bindVertexArray(vao);
+    // var vao = gl.createVertexArray();
+    // gl.bindVertexArray(vao);
 
     // setting a_position using attribute
+    var positionAttributeLocation = gl.getAttribLocation(program, "a_position");
+    gl.enableVertexAttribArray(positionAttributeLocation);
     var size = 2;
     var type = gl.FLOAT;
     var normalize = false;
     var stride = 0;
     var offset = 0;
-    var positionAttributeLocation = gl.getAttribLocation(program, "a_position");
-    gl.enableVertexAttribArray(positionAttributeLocation);
     gl.vertexAttribPointer(positionAttributeLocation, size, type, normalize, stride, offset);
 
     // setting the gl program
@@ -113,7 +110,28 @@ function Rec(gl, {startX, startY, width, height}, {r, g, b}) {
     // and finally, running out program
     var primitiveType = gl.TRIANGLES;
     var offset = 0;
-    var count = 6;
+    var count = 3;
     gl.drawArrays(primitiveType, offset, count);
+
+}
+
+function Rectangle(gl, {startX, startY, width, height}, {r, g, b}) {
+
+    // drawing it with 2 triangles
+    Triangle(
+        gl,
+        {x1: startX, y1: startY},
+        {x2: startX + width, y2: startY},
+        {x3: startX, y3: startY + height},
+        {r, g, b}
+    );
+
+    Triangle(
+        gl,
+        {x1: startX + width, y1: startY},
+        {x2: startX, y2: startY + height},
+        {x3: startX + width, y3: startY + height},
+        {r, g, b}
+    );
 
 }
