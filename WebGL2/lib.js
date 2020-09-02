@@ -1,9 +1,13 @@
 function Initialize(canvas) {
-  var gl = canvas.getContext("webgl2");
-  gl.clearColor(0, 0, 0, 0);
-  gl.clear(gl.COLOR_BUFFER_BIT);
-  gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-  return gl;
+    var gl = canvas.getContext("webgl2");
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+    return gl;
+}
+
+function Clear(gl) {
+    gl.clear(gl.COLOR_BUFFER_BIT);
 }
 
 function Triangle(gl, {x1, y1}, {x2, y2}, {x3, y3}, {r, g, b}) {

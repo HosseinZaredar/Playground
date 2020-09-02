@@ -1,39 +1,29 @@
-function main() {
+function setup() {
 
   const canvas = document.querySelector("#glCanvas");
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+
+  canvas.setAttribute('width', width);
+  canvas.setAttribute('height', height);
+  
   const gl = Initialize(canvas);
-
-  // Triangle(
-  //   gl,
-  //   {x1: 0, y1: 0},
-  //   {x2: 50, y2: 150},
-  //   {x3: 150, y3: 50},
-  //   {r: 200, g: 100, b: 20}
-  // );
-
-  // Rectangle(gl,
-  //   {startX: 20, startY: 20, width: 150, height: 150},
-  //   {r: 200, g: 100, b: 20}
-  // );
-
-  // Rectangle(gl,
-  //   {startX: 40, startY: 40, width: 150, height: 150},
-  //   {r: 0, g: 100, b: 20}
-  // );
-
-  // Rectangle(gl,
-  //   {startX: 60, startY: 60, width: 150, height: 150},
-  //   {r: 50, g: 50, b: 50}
-  // );
-
-  Line(
-    gl,
-    {x1: 50, y1: 50},
-    {x2: 550, y2: 250},
-    3,
-    {r: 50, g: 50, b: 50}
-  )
+  requestAnimationFrame(() => render(gl));
 
 }
 
-window.onload = main;
+var x = 0;
+var y = 0;
+
+function render(gl) {
+  Rectangle(gl,
+    {startX: x, startY: y, width: 150, height: 150},
+    {r: 200, g: 100, b: 20}
+  );
+  
+  x++;
+
+  requestAnimationFrame(() => render(gl))
+}
+
+window.onload = setup;
