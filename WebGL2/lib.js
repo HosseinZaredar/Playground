@@ -135,3 +135,30 @@ function Rectangle(gl, {startX, startY, width, height}, {r, g, b}) {
     );
 
 }
+
+function Line(gl, {x1, y1}, {x2, y2}, thickness, {r, g, b}) {
+
+    var deltaX = x2 - x1
+    var deltaY = y2 - y1
+    var length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+    dx = (thickness * deltaY) / (length * 2)
+    dy = (thickness * deltaX) / (length * 2)
+
+    // drawing it with 2 triangles
+    Triangle(
+        gl,
+        {x1: x1 + dx, y1: y1 - dy},
+        {x2: x2 - dx, y2: y2 + dy},
+        {x3: x2 + dx, y3: y2 - dy},
+        {r, g, b}
+    );
+
+    Triangle(
+        gl,
+        {x1: x1 + dx, y1: y1 - dy},
+        {x2: x2 - dx, y2: y2 + dy},
+        {x3: x1 - dx, y3: y1 + dy},
+        {r, g, b}
+    );
+}
