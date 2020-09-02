@@ -1,12 +1,16 @@
-// upading state
+// Global Variables
+var width;
+var height;
 
-
-
-function Initialize(canvas) {
+function Initialize(canvas, w, h) {
     var gl = canvas.getContext("webgl2");
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+
+    width = w;
+    height = h;
+
     return gl;
 }
 
@@ -14,11 +18,19 @@ function Clear(gl) {
     gl.clear(gl.COLOR_BUFFER_BIT);
 }
 
+function ToClipX(x) {
+    return 2 * x / width - 1;
+}
+
+function ToClip(y) {
+    return 2 * y / height - 1;
+}
+
 function Triangle(gl, {x1, y1}, {x2, y2}, {x3, y3}, {r, g, b}) {
 
     // vertex shader
     var vertexShaderSource = `#version 300 es
- 
+
     in vec2 a_position;
     uniform vec2 u_resolution;
 
@@ -88,6 +100,7 @@ function Triangle(gl, {x1, y1}, {x2, y2}, {x3, y3}, {r, g, b}) {
         x2, y2,
         x3, y3,
     ];
+
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 
     // creating Vertex Array Object
@@ -292,4 +305,98 @@ function Circle(gl, x, y, radius, {r, g, b}) {
     var offset = 0;
     var count = n + 2;
     gl.drawArrays(primitiveType, offset, count);
+}
+
+function Grid(gl, delta) {
+
+    var yn = height / (delta * 2);
+    var xn = width / (delta * 2);
+
+    // half grid lines
+    for (var i = 0; i < 2 * yn; i++) {
+        Line(
+            gl,
+            {x1: 0, y1: height / 2 + i * delta / 2},
+            {x2: width, y2: height / 2 + i * delta / 2},
+            1,
+            {r: 180, g: 180, b: 180}
+        );
+        Line(
+            gl,
+            {x1: 0, y1: height / 2 - i * delta / 2},
+            {x2: width, y2: height / 2 - i * delta / 2},
+            1,
+            {r: 180, g: 180, b: 180}
+        );
+    }
+
+    for (var i = 0; i < 2 * xn; i++) {
+        Line(
+            gl,
+            {x1: width / 2 + i * delta / 2, y1: 0},
+            {x2: width / 2 + i * delta / 2, y2: height},
+            1,
+            {r: 180, g: 180, b: 180}
+        );
+        Line(
+            gl,
+            {x1: width / 2 - i * delta / 2, y1: 0},
+            {x2: width / 2 - i * delta / 2, y2: height},
+            1,
+            {r: 180, g: 180, b: 180}
+        );
+    }
+
+    // integer grid lines
+    for (var i = 0; i < yn; i++) {
+        Line(
+            gl,
+            {x1: 0, y1: height / 2 + i * delta},
+            {x2: width, y2: height / 2 + i * delta},
+            1,
+            {r: 90, g: 90, b: 90}
+        );
+
+        Line(
+            gl,
+            {x1: 0, y1: height / 2 - i * delta},
+            {x2: width, y2: height / 2 - i * delta},
+            1,
+            {r: 90, g: 90, b: 90}
+        );
+    }
+
+    for (var i = 0; i < xn; i++) {
+        Line(
+            gl,
+            {x1: width / 2 + i * delta, y1: 0},
+            {x2: width / 2 + i * delta, y2: height},
+            1,
+            {r: 90, g: 90, b: 90}
+        );
+        Line(
+            gl,
+            {x1: width / 2 - i * delta, y1: 0},
+            {x2: width / 2 - i * delta, y2: height},
+            1,
+            {r: 90, g: 90, b: 90}
+        );
+    }
+
+    // center grid lines
+    Line(
+        gl,
+        {x1: 0, y1: height / 2},
+        {x2: width, y2: height / 2},
+        2,
+        {r: 0, g: 0, b: 0}
+    );
+    Line(
+        gl,
+        {x1: width / 2, y1: 0},
+        {x2: width / 2, y2: height},
+        2,
+        {r: 0, g: 0, b: 0}
+    );
+
 }

@@ -7,8 +7,8 @@ function setup() {
   canvas.setAttribute('width', width);
   canvas.setAttribute('height', height);
   
-  const gl = Initialize(canvas);
-  requestAnimationFrame(() => render(gl));
+  const gl = Initialize(canvas, width, height);
+  requestAnimationFrame((now) => render(now, gl));
 
 }
 
@@ -18,24 +18,29 @@ var y = y0;
 var x;
 var v;
 var v0 = 0;
-var t = 0.3;
+var t = 0;
 var dir = -1;
 var bounce = 0.8;
 var slider;
 var size = 200;
 
-function render(gl) {
+var then = 0;
+
+function render(now, gl) {
+
+  now *= 0.001;
+  var deltaTime = now - then; // frame rate independent delta time
 
   if (dir == -1) {
     if (y > 75) {
-      t += 0.2;
+      t += 10 * deltaTime;
       y = -0.5 * g * t * t + y0;
       v = g * t + v0;
     } else {
       dir = 1;
       v0 = bounce * v;
       y0 = y;
-      t = 0.4
+      t = 0
     }
   }
 
@@ -44,9 +49,9 @@ function render(gl) {
       dir = -1;
       y0 = y;
       v0 = 0;
-      t = 0.4
+      t = 0
     } else {
-      t += 0.2;
+      t += 10 * deltaTime;
       y = -0.5 * g * t * t + v0 * t + y0;
       v = -g * t + v0;
     }
@@ -61,7 +66,9 @@ function render(gl) {
     {r: 200, g: 100, b: 20}
   );
 
-  requestAnimationFrame(() => render(gl))
+  then = now;
+
+  requestAnimationFrame((now) => render(now, gl))
 }
 
 window.onload = setup;

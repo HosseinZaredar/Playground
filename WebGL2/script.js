@@ -6,10 +6,10 @@ function setup() {
 
   canvas.setAttribute('width', width);
   canvas.setAttribute('height', height);
-  
-  const gl = Initialize(canvas);
-  
-  Circle(gl, 500, 500, 150, {r: 200, g: 100, b: 20});
+
+  const gl = Initialize(canvas, width, height);
+
+  Grid(gl, 140);
 
 }
 
