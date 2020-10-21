@@ -1,3 +1,0 @@
-file 'file:/home/hossein/Desktop/Playground/manim/media/videos/example_scenes/1440p60/partial_movie_files/SquareToCircle/00000.mp4'
-file 'file:/home/hossein/Desktop/Playground/manim/media/videos/example_scenes/1440p60/partial_movie_files/SquareToCircle/00001.mp4'
-file 'file:/home/hossein/Desktop/Playground/manim/media/videos/example_scenes/1440p60/partial_movie_files/SquareToCircle/00002.mp4'
