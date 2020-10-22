@@ -15,52 +15,43 @@ class Plot(GraphScene):
         "x_axis_label": None,
         "x_axis_width": 18,
         "y_axis_height": 9,
-        # "y_labeled_nums": range(-9, 9, 1),
-        # "x_labeled_nums": range(-18, 18, 1)
     }
     def construct(self):
         self.setup_axes()
 
-        # x:
+        # drawing x:
         tx = np.array(range(-7, 7, 1))
         yx = 3 * np.sin(tx)
 
         gx1 = VGroup()
-        gx2 = VGroup()
 
-        # lines
+        # creating lines
         for i in range(len(tx)):
             lx1 = Line([tx[i]/2, 0, 0], [tx[i]/2, yx[i]/2, 0])
             lx1.set_color(GREEN)
             gx1.add(lx1)
 
-            lx2 = Line([-tx[i]/2, 0, 0], [-tx[i]/2, yx[i]/2, 0])
-            lx2.set_color(GREEN)
-            gx2.add(lx2)
-
-        # dots
+        # creating dots
         for i in range(len(tx)):
             dx1 = Dot([tx[i]/2, yx[i]/2, 0])
             dx1.set_color(GREEN)
             gx1.add(dx1)
-            dx2 = Dot([-tx[i]/2, yx[i]/2, 0])
-            dx2.set_color(GREEN)
-            gx2.add(dx2)
 
         
+        # drawing them
         self.play(Write(gx1))
         self.wait(1)
 
 
-        # h:
+        # drawing h:
 
-        th = np.array(range(-3, 2, 1))
+        th = np.array(range(-2, 2, 1))
         yh = 2 * np.cos(th)
         
         gh1 = VGroup()
         gh2 = VGroup()
 
-        # lines
+        # creating lines
         for i in range(len(th)):
             lh1 = Line([th[i]/2, 0, 0], [th[i]/2, yh[i]/2, 0])
             lh1.set_color(BLUE)
@@ -70,7 +61,7 @@ class Plot(GraphScene):
             lh2.set_color(BLUE)
             gh2.add(lh2)
 
-        # dots
+        # creating dots
         for i in range(len(th)):
             dh1 = Dot([th[i]/2, yh[i]/2, 0])
             dh1.set_color(BLUE)
@@ -79,29 +70,33 @@ class Plot(GraphScene):
             dh2.set_color(BLUE)
             gh2.add(dh2)
 
-        
+        # drawing h[k]
         self.play(Write(gh1))
         self.wait(1)
         self.play(Transform(gh1, gh2))
         self.wait(1)
 
+        # drawing h[-k]
         self.remove(gh1)
         self.play(gh2.shift, [-6, 0, 0], run_time=1.5)
         self.wait(1)
 
-        th_min = -th[len(th) - 1]
-        th_max = -th[0]
-        yh_min = min(*yh)
-        yh_max = max(*yh)
 
-        rect = Polygon([th_min/2-1/4, yh_min/2-1/4, 0], [th_max/2+1/4, yh_min/2-1/4, 0],
-                [th_max/2+1/4, yh_max/2+1/4, 1], [th_min/2-1/4, yh_max/2+1/4, 0])
+        # drawing window
+        tw_min = -th[len(th) - 1]
+        tw_max = -th[0]
+        yw_min = min(*yx)
+        yw_max = max(*yx)
+
+        rect = Polygon([tw_min/2-1/4, yw_min/2-1/4, 0], [tw_max/2+1/4, yw_min/2-1/4, 0],
+                [tw_max/2+1/4, yw_max/2+1/4, 1], [tw_min/2-1/4, yw_max/2+1/4, 0])
         rect.set_color(WHITE)
         rect.shift([-6, 0, 0])
         self.play(Write(rect))
 
         self.wait(1)
 
+        # moving the window and h[n - k]
         window = VGroup(gh2, rect)
 
         for i in range(22):
@@ -122,10 +117,6 @@ class Plot(GraphScene):
         self.y_axis.set_color(RED)
         self.play(
             *[Write(objeto)
-            for objeto in [
-                    self.y_axis,
-                    self.x_axis,
-                ]
-            ],
+            for objeto in [self.y_axis, self.x_axis]],
             run_time=2
         )
