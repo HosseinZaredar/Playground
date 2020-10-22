@@ -20,36 +20,94 @@ class Plot(GraphScene):
     }
     def construct(self):
         self.setup_axes()
-        x = np.array(range(-7, 7, 1))
-        y = 3 * np.sin(x)
-        
-        g1 = VGroup()
-        g2 = VGroup()
 
+        # x:
+        tx = np.array(range(-7, 7, 1))
+        yx = 3 * np.sin(tx)
 
-        
+        gx1 = VGroup()
+        gx2 = VGroup()
+
         # lines
-        for i in range(len(x)):
-            l1 = Line([x[i]/2, 0, 0], [x[i]/2, y[i]/2, 0])
-            l1.set_color(BLUE)
-            g1.add(l1)
+        for i in range(len(tx)):
+            lx1 = Line([tx[i]/2, 0, 0], [tx[i]/2, yx[i]/2, 0])
+            lx1.set_color(GREEN)
+            gx1.add(lx1)
 
-            l2 = Line([-x[i]/2, 0, 0], [-x[i]/2, y[i]/2, 0])
-            l2.set_color(BLUE)
-            g2.add(l2)
+            lx2 = Line([-tx[i]/2, 0, 0], [-tx[i]/2, yx[i]/2, 0])
+            lx2.set_color(GREEN)
+            gx2.add(lx2)
 
         # dots
-        for i in range(len(x)):
-            d1 = Dot([x[i]/2, y[i]/2, 0])
-            g1.add(d1)
-            d2 = Dot([-x[i]/2, y[i]/2, 0])
-            g2.add(d2)
+        for i in range(len(tx)):
+            dx1 = Dot([tx[i]/2, yx[i]/2, 0])
+            dx1.set_color(GREEN)
+            gx1.add(dx1)
+            dx2 = Dot([-tx[i]/2, yx[i]/2, 0])
+            dx2.set_color(GREEN)
+            gx2.add(dx2)
 
         
-        self.play(Write(g1))
-        self.wait(2)
-        self.play(Transform(g1, g2))
-        self.wait(2)
+        self.play(Write(gx1))
+        self.wait(1)
+
+
+        # h:
+
+        th = np.array(range(-3, 2, 1))
+        yh = 2 * np.cos(th)
+        
+        gh1 = VGroup()
+        gh2 = VGroup()
+
+        # lines
+        for i in range(len(th)):
+            lh1 = Line([th[i]/2, 0, 0], [th[i]/2, yh[i]/2, 0])
+            lh1.set_color(BLUE)
+            gh1.add(lh1)
+
+            lh2 = Line([-th[i]/2, 0, 0], [-th[i]/2, yh[i]/2, 0])
+            lh2.set_color(BLUE)
+            gh2.add(lh2)
+
+        # dots
+        for i in range(len(th)):
+            dh1 = Dot([th[i]/2, yh[i]/2, 0])
+            dh1.set_color(BLUE)
+            gh1.add(dh1)
+            dh2 = Dot([-th[i]/2, yh[i]/2, 0])
+            dh2.set_color(BLUE)
+            gh2.add(dh2)
+
+        
+        self.play(Write(gh1))
+        self.wait(1)
+        self.play(Transform(gh1, gh2))
+        self.wait(1)
+
+        self.remove(gh1)
+        self.play(gh2.shift, [-6, 0, 0], run_time=1.5)
+        self.wait(1)
+
+        th_min = -th[len(th) - 1]
+        th_max = -th[0]
+        yh_min = min(*yh)
+        yh_max = max(*yh)
+
+        rect = Polygon([th_min/2-1/4, yh_min/2-1/4, 0], [th_max/2+1/4, yh_min/2-1/4, 0],
+                [th_max/2+1/4, yh_max/2+1/4, 1], [th_min/2-1/4, yh_max/2+1/4, 0])
+        rect.set_color(WHITE)
+        rect.shift([-6, 0, 0])
+        self.play(Write(rect))
+
+        self.wait(1)
+
+        window = VGroup(gh2, rect)
+
+        for i in range(22):
+            self.play(window.shift, [0.5, 0, 0], run_time=0.5)
+            self.wait(1)
+
 
 
     def setup_axes(self):
